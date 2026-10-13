@@ -1,13 +1,20 @@
 module.exports = {
-  HOST: 'ep-falling-thunder-atnjous9-pooler.c-9.us-east-1.aws.neon.tech',
-  USER: "neondb_owner",
-  PASSWORD: "npg_aFuQlX12sMjh",
-  DB: "neondb",
-  dialect: "postgres",
+  HOST: 'aws-0-us-east-1.pooler.supabase.com',
+  USER: 'postgres.runmfjrhshpxzroyqohi',
+  PASSWORD: 'P5toepGepQZg36Vm', 
+  DB: 'postgres',
+  PORT: 6543,
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
     idle: 10000
   }
-  };
+};
