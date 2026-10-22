@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<StackPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.sistematickets.Controller.PanelAdminController"
+           prefWidth="1100" prefHeight="720" minWidth="860" minHeight="560"
+           styleClass="panel-root, rol-admin" stylesheets="@css/seleccion-usuario.css">
+
+    <Circle radius="260" fill="#7e22ce" opacity="0.45" mouseTransparent="true" StackPane.alignment="TOP_LEFT"
+            translateX="-120" translateY="-120"><effect><GaussianBlur radius="110"/></effect></Circle>
+    <Circle radius="220" fill="#6d28d9" opacity="0.40" mouseTransparent="true" StackPane.alignment="BOTTOM_RIGHT"
+            translateX="110" translateY="110"><effect><GaussianBlur radius="110"/></effect></Circle>
+
+    <BorderPane>
+        <left>
+            <VBox spacing="8" prefWidth="250" minWidth="250" styleClass="sidebar">
+                <BorderPane.margin><Insets top="14" right="0" bottom="14" left="14"/></BorderPane.margin>
+                <Label text="Tickets" styleClass="login-title"/>
+                <Label text="Panel de administración" styleClass="muted"/>
+                <Region minHeight="14"/>
+                <VBox fx:id="nav" spacing="6"/>
+                <Region VBox.vgrow="ALWAYS"/>
+                <Label fx:id="lblUsuario" styleClass="muted" wrapText="true"/>
+                <Button text="Cerrar sesión" onAction="#onSalir" styleClass="nav-btn" maxWidth="Infinity"/>
+            </VBox>
+        </left>
+        <center>
+            <VBox spacing="16">
+                <padding><Insets top="24" right="28" bottom="24" left="24"/></padding>
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <VBox spacing="2">
+                        <Label fx:id="lblTitulo" styleClass="panel-title"/>
+                        <Label fx:id="lblConteo" styleClass="muted"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="tfBuscar" promptText="Buscar…" styleClass="login-field" prefWidth="240"/>
+                    <Button fx:id="btnNuevo" onAction="#onNuevo" styleClass="primary-btn"/>
+                </HBox>
+                <StackPane styleClass="panel-card" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tabla"/>
+                </StackPane>
+            </VBox>
+        </center>
+    </BorderPane>
+
+    <StackPane fx:id="modalHost" visible="false" managed="false" styleClass="modal-dim"/>
+    <Label fx:id="lblToast" styleClass="toast" visible="false" managed="false" StackPane.alignment="BOTTOM_CENTER">
+        <StackPane.margin><Insets bottom="28"/></StackPane.margin>
+    </Label>
+</StackPane>

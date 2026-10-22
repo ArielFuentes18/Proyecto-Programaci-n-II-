@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.sistematickets.Controller.LoginClienteController"
+           styleClass="rol-cliente" stylesheets="@css/seleccion-usuario.css">
+
+    <VBox alignment="CENTER_LEFT" spacing="12" maxWidth="460" maxHeight="-Infinity" styleClass="login-wrap">
+        <Button text="← Volver al selector de rol" onAction="#onVolver" styleClass="link-btn, back-btn"/>
+
+        <VBox spacing="16" styleClass="login-card">
+            <StackPane styleClass="icon-bubble" prefWidth="64" prefHeight="64" minWidth="64" minHeight="64" maxWidth="64" maxHeight="64">
+                <SVGPath content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="white" scaleX="1.8" scaleY="1.8"/>
+            </StackPane>
+            <Label text="Bienvenido de nuevo" styleClass="login-title"/>
+            <Label text="Entra para ver conciertos y tus boletos." styleClass="login-sub" wrapText="true"/>
+
+            <VBox spacing="6">
+                <Label text="Correo electrónico" styleClass="field-label"/>
+                <TextField fx:id="tfUsuario" promptText="tucorreo@ejemplo.com" styleClass="login-field"/>
+                <Label fx:id="lblErrUsuario" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Contraseña" styleClass="field-label"/>
+                <StackPane alignment="CENTER_RIGHT">
+                    <PasswordField fx:id="pfPassword" promptText="••••••••" styleClass="login-field"/>
+                    <TextField fx:id="tfPassword" promptText="••••••••" styleClass="login-field" visible="false" managed="false"/>
+                    <Button fx:id="btnEye" text="Mostrar" onAction="#onToggleEye" styleClass="eye-btn" focusTraversable="false"/>
+                </StackPane>
+                <Label fx:id="lblErrPassword" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="4">
+                <Label text="¿Primera vez aquí?" styleClass="muted"/>
+                <Button text="Crear una cuenta" onAction="#onCrearCuenta" styleClass="link-btn"/>
+            </HBox>
+            <Button fx:id="btnLogin" text="Iniciar sesión" onAction="#onLogin" defaultButton="true"
+                    styleClass="primary-btn" maxWidth="Infinity"/>
+            <Label fx:id="lblMensaje" styleClass="msg-error" wrapText="true" visible="false" managed="false"/>
+        </VBox>
+    </VBox>
+
+</StackPane>

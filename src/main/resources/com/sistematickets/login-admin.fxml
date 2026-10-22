@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.sistematickets.Controller.LoginAdminController"
+           styleClass="rol-admin" stylesheets="@css/seleccion-usuario.css">
+
+    <VBox alignment="CENTER_LEFT" spacing="12" maxWidth="460" maxHeight="-Infinity" styleClass="login-wrap">
+        <Button text="← Volver al selector de rol" onAction="#onVolver" styleClass="link-btn, back-btn"/>
+
+        <VBox spacing="16" styleClass="login-card">
+            <StackPane styleClass="icon-bubble" prefWidth="64" prefHeight="64" minWidth="64" minHeight="64" maxWidth="64" maxHeight="64">
+                <SVGPath content="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" fill="white" scaleX="1.8" scaleY="1.8"/>
+            </StackPane>
+            <Label text="Acceso de administración" styleClass="login-title"/>
+            <Label text="Ingresa con tus credenciales de administrador." styleClass="login-sub" wrapText="true"/>
+
+            <VBox spacing="6">
+                <Label text="Usuario o correo electrónico" styleClass="field-label"/>
+                <TextField fx:id="tfUsuario" promptText="admin@empresa.com" styleClass="login-field"/>
+                <Label fx:id="lblErrUsuario" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Contraseña" styleClass="field-label"/>
+                <StackPane alignment="CENTER_RIGHT">
+                    <PasswordField fx:id="pfPassword" promptText="••••••••" styleClass="login-field"/>
+                    <TextField fx:id="tfPassword" promptText="••••••••" styleClass="login-field" visible="false" managed="false"/>
+                    <Button fx:id="btnEye" text="Mostrar" onAction="#onToggleEye" styleClass="eye-btn" focusTraversable="false"/>
+                </StackPane>
+                <Label fx:id="lblErrPassword" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="4">
+                <Label text="¿No tienes cuenta?" styleClass="muted"/>
+                <Button text="Solicitar registro de Admin" onAction="#onAbrirRegistro" styleClass="link-btn"/>
+            </HBox>
+            <Button fx:id="btnLogin" text="Iniciar sesión" onAction="#onLogin" defaultButton="true"
+                    styleClass="primary-btn" maxWidth="Infinity"/>
+            <Label fx:id="lblMensaje" styleClass="msg-error" wrapText="true" visible="false" managed="false"/>
+        </VBox>
+    </VBox>
+    <StackPane fx:id="modal" visible="false" managed="false" styleClass="modal-dim">
+        <VBox spacing="12" maxWidth="440" maxHeight="-Infinity" alignment="CENTER_LEFT" styleClass="login-card">
+            <Label text="Crear cuenta de Admin" styleClass="login-title"/>
+            <Label text="La cuenta queda pendiente hasta que un administrador la apruebe en la sección Administradores." styleClass="login-sub" wrapText="true"/>
+            <Label text="Nombre" styleClass="field-label"/>
+            <TextField fx:id="tfRegNombre" styleClass="login-field"/>
+            <Label text="Correo electrónico" styleClass="field-label"/>
+            <TextField fx:id="tfRegCorreo" styleClass="login-field"/>
+            <Label text="Contraseña (mínimo 6 caracteres)" styleClass="field-label"/>
+            <PasswordField fx:id="pfRegPass" styleClass="login-field"/>
+            <Label fx:id="lblRegMsg" styleClass="err-label" wrapText="true" visible="false" managed="false"/>
+            <HBox spacing="12">
+                <Button text="Cancelar" onAction="#onCerrarRegistro" styleClass="tbl-btn" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                <Button fx:id="btnRegEnviar" text="Enviar" onAction="#onEnviarRegistro" styleClass="primary-btn" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+            </HBox>
+        </VBox>
+    </StackPane>
+</StackPane>

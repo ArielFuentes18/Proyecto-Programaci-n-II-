@@ -4,11 +4,14 @@
     <groupId>com.sistematickets</groupId>
     <artifactId>SistemaVentaTickets</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <javafx.version>25.0.4</javafx.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <!-- JavaFX 25 exige JDK 23+; con Java 21 se usa JavaFX 21.x -->
+        <javafx.version>21.0.5</javafx.version>
+        <jackson.version>2.17.2</jackson.version>
+        <exec.mainClass>com.sistematickets.Launcher</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
@@ -23,13 +26,13 @@
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics</artifactId>
+            <artifactId>javafx-media</artifactId>
             <version>${javafx.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-base</artifactId>
-            <version>${javafx.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -37,29 +40,22 @@
             <version>42.7.4</version>
         </dependency>
     </dependencies>
-    
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.13.0</version>
                 <configuration>
                     <release>21</release>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.sistematickets.App</mainClass>
-                    <arguments>
-                        <argument>--module-path</argument>
-                        <argument>C:\Program Files\JavaFx\javafx-sdk-25.0.4\lib</argument>
-                        <argument>--add-modules</argument>
-                        <argument>javafx.controls,javafx.fxml,javafx.graphics</argument>
-                    </arguments>
+                    <mainClass>com.sistematickets/com.sistematickets.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>

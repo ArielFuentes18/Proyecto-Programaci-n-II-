@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.sistematickets.Controller.LoginVendedorController"
+           styleClass="rol-vendedor" stylesheets="@css/seleccion-usuario.css">
+
+    <VBox alignment="CENTER_LEFT" spacing="12" maxWidth="460" maxHeight="-Infinity" styleClass="login-wrap">
+        <Button text="← Volver al selector de rol" onAction="#onVolver" styleClass="link-btn, back-btn"/>
+
+        <VBox spacing="16" styleClass="login-card">
+            <StackPane styleClass="icon-bubble" prefWidth="64" prefHeight="64" minWidth="64" minHeight="64" maxWidth="64" maxHeight="64">
+                <SVGPath content="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" fill="white" scaleX="1.8" scaleY="1.8"/>
+            </StackPane>
+            <Label text="Acceso de ventas" styleClass="login-title"/>
+            <Label text="Ingresa para registrar ventas de boletos." styleClass="login-sub" wrapText="true"/>
+
+            <VBox spacing="6">
+                <Label text="Correo electrónico" styleClass="field-label"/>
+                <TextField fx:id="tfUsuario" promptText="vendedor@empresa.com" styleClass="login-field"/>
+                <Label fx:id="lblErrUsuario" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Contraseña" styleClass="field-label"/>
+                <StackPane alignment="CENTER_RIGHT">
+                    <PasswordField fx:id="pfPassword" promptText="••••••••" styleClass="login-field"/>
+                    <TextField fx:id="tfPassword" promptText="••••••••" styleClass="login-field" visible="false" managed="false"/>
+                    <Button fx:id="btnEye" text="Mostrar" onAction="#onToggleEye" styleClass="eye-btn" focusTraversable="false"/>
+                </StackPane>
+                <Label fx:id="lblErrPassword" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <CheckBox text="Mantener sesión"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Olvidé mi contraseña" onAction="#onOlvido" styleClass="link-btn"/>
+            </HBox>
+            <Button fx:id="btnLogin" text="Iniciar sesión" onAction="#onLogin" defaultButton="true"
+                    styleClass="primary-btn" maxWidth="Infinity"/>
+            <Label fx:id="lblMensaje" styleClass="msg-error" wrapText="true" visible="false" managed="false"/>
+        </VBox>
+    </VBox>
+
+</StackPane>
