@@ -17,35 +17,65 @@ const transformarUsuario = (usuario) => {
   return userJson;
 };
 
-exports.create = (req, res) => {
-  if (!req.body.nombre || !req.body.correo || !req.body.password) {
-    return res.status(400).send({ message: "El contenido no puede estar vacío." });
-  }
+exports.create = async (req, res) => {
+  try {
+    const { id_usuario_admin, password_admin, nombre, correo, password, id_rol, status, fecha } = req.body;
 
-  const usuario = {
-    nombre: req.body.nombre,
-    correo: req.body.correo,
-    password: req.body.password,
-    id_rol: req.body.id_rol || 1,
-    status: req.body.status !== undefined ? req.body.status : 1
-  };
-
-  Usuario.create(usuario)
-    .then(data => {
-      return Usuario.findByPk(data.id_usuario, {
-        include: [{
-          model: Rol,
-          as: 'rol',
-          attributes: ['id_rol', 'nombre']
-        }]
+    if (!id_usuario_admin || !password_admin) {
+      return res.status(400).send({ 
+        message: "Se requiere el ID y la contraseña del administrador para realizar esta acción." 
       });
-    })
-    .then(usuarioCreado => {
-      res.status(201).send(transformarUsuario(usuarioCreado));
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message || "Error al crear el usuario." });
+    }
+
+    if (!nombre || !correo || !password) {
+      return res.status(400).send({ message: "El contenido no puede estar vacío." });
+    }
+
+    if (!password || password.length !== 6) {
+      return res.status(400).send({ message: "La contraseña del nuevo usuario debe ser exactamente de 6 dígitos." });
+    }
+
+    const admin = await Usuario.findByPk(id_usuario_admin, {
+      include: [{
+        model: Rol,
+        as: 'rol',
+        attributes: ['id_rol', 'nombre']
+      }]
     });
+
+    const esRolAdmin = admin && admin.rol && (admin.rol.id_rol === 1 || admin.rol.nombre === 'ADMIN');
+    const passwordCorrecto = admin && admin.password === password_admin;
+
+    if (!admin || !passwordCorrecto || !esRolAdmin) {
+      return res.status(403).send({ 
+        message: "El ID o la contraseña del administrador son incorrectos, o no cuenta con permisos de administrador." 
+      });
+    }
+
+    const usuarioNuevoData = {
+      nombre,
+      correo,
+      password,
+      id_rol: id_rol || 1,
+      status: status !== undefined ? status : 1,
+      fecha: fecha || new Date()
+    };
+
+    const data = await Usuario.create(usuarioNuevoData);
+    
+    const usuarioCreado = await Usuario.findByPk(data.id_usuario, {
+      include: [{
+        model: Rol,
+        as: 'rol',
+        attributes: ['id_rol', 'nombre']
+      }]
+    });
+
+    return res.status(201).send(transformarUsuario(usuarioCreado));
+
+  } catch (err) {
+    return res.status(500).send({ message: err.message || "Error al crear el usuario." });
+  }
 };
 
 exports.findAll = (req, res) => {
