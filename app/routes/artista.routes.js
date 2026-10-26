@@ -2,9 +2,11 @@ module.exports = app => {
   const artistas = require("../controllers/artista.controller.js");
   const { verificarToken, soloRoles } = require("../middleware/auth");
   const admin = [verificarToken, soloRoles("administrador")];
-  var router = require("express").Router();
+  const express = require("express");
+  var router = express.Router();
 
   // Lectura pública; escritura solo administradores
+  router.post("/imagen", ...admin, express.raw({ type: "image/*", limit: "6mb" }), artistas.subirImagen);
   router.post("/create", ...admin, artistas.create);
   router.get("/", artistas.findAll);
   router.get("/:id", artistas.findOne);

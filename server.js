@@ -29,6 +29,7 @@ require("./app/routes/concierto.routes")(app);
 require("./app/routes/localidad.routes")(app);
 require("./app/routes/inventario_boleto.routes")(app);
 require("./app/routes/detalle_venta.routes")(app);
+require("./app/routes/estadistica.routes")(app);
 
 // Ruta inexistente -> JSON
 app.use((req, res) => res.status(404).json({ message: "Ruta no encontrada." }));
