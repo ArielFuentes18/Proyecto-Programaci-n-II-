@@ -14,6 +14,8 @@ const urlImagen = (req, guardada) => {
   if (!guardada) return guardada;
   return urlArchivo(req, String(guardada).split("?")[0].split("/").pop());
 };
+// Lo reutiliza concierto.controller.js para que la tarjeta del concierto reciba la misma URL de foto
+exports.urlImagen = urlImagen;
 const conImagen = (req, artista) => {
   const j = artista && typeof artista.toJSON === "function" ? artista.toJSON() : artista;
   return { ...j, imagen_url: urlImagen(req, j.imagen_url) };
@@ -98,7 +100,7 @@ exports.verImagen = async (req, res) => {
   }
 };
 
-// POST /api/artistas/imagen  (admin) - cuerpo = bytes de la imagen, Content-Type = image/jpeg|png|webp|gif
+// POST /api/artistas/imagen  (admin) - cuerpo = bytes de la imagen, Content-Type = image/jpeg|png|gif
 // Sube el archivo al bucket de Supabase Storage con la clave de servicio, que NUNCA sale del servidor.
 exports.subirImagen = async (req, res) => {
   try {
@@ -107,9 +109,10 @@ exports.subirImagen = async (req, res) => {
       return res.status(500).send({ message: "Falta configurar SUPABASE_SERVICE_KEY en el servidor." });
     }
     const tipo = String(req.headers["content-type"] || "").split(";")[0].trim();
-    const ext = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" }[tipo];
+    // WebP se excluye a propósito: JavaFX (Image/ImageView) no sabe decodificarlo y la foto se vería en blanco.
+    const ext = { "image/jpeg": "jpg", "image/png": "png", "image/gif": "gif" }[tipo];
     if (!ext) {
-      return res.status(400).send({ message: "Formato no permitido. Usa JPG, PNG, WebP o GIF." });
+      return res.status(400).send({ message: "Formato no permitido. Usa JPG, PNG o GIF." });
     }
     if (!Buffer.isBuffer(req.body) || req.body.length === 0) {
       return res.status(400).send({ message: "No se recibió ninguna imagen." });

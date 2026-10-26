@@ -1,6 +1,19 @@
 const db = require("../models");
 const Concierto = db.conciertos;
 const Artista = db.artistas;
+const { urlImagen } = require("./artista.controller");
+
+// El concierto trae al artista anidado: incluimos la foto y la convertimos a la URL que sirve el backend
+const incluirArtista = {
+  model: db.artistas,
+  as: 'artista',
+  attributes: ['id_artista', 'nombre_artistico', 'genero_musical', 'pais_origen', 'imagen_url']
+};
+const conFoto = (req, concierto) => {
+  const j = concierto && typeof concierto.toJSON === "function" ? concierto.toJSON() : concierto;
+  if (j && j.artista) j.artista = { ...j.artista, imagen_url: urlImagen(req, j.artista.imagen_url) };
+  return j;
+};
 
 exports.create = async (req, res) => {
   const { id_artista, titulo_evento, fecha_concierto, recinto, estado } = req.body;
@@ -40,13 +53,9 @@ exports.create = async (req, res) => {
 
 exports.findAll = (req, res) => {
   Concierto.findAll({
-    include: [{
-      model: db.artistas,
-      as: 'artista',
-      attributes: ['id_artista', 'nombre_artistico', 'genero_musical']
-    }]
+    include: [incluirArtista]
   })
-    .then(data => res.send(data))
+    .then(data => res.send(data.map(c => conFoto(req, c))))
     .catch(err => {
       res.status(500).send({
         message: err.message || "Error al obtener los conciertos."
@@ -58,15 +67,11 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Concierto.findByPk(id, {
-    include: [{
-      model: db.artistas,
-      as: 'artista',
-      attributes: ['id_artista', 'nombre_artistico', 'genero_musical']
-    }]
+    include: [incluirArtista]
   })
     .then(data => {
       if (data) {
-        res.send(data);
+        res.send(conFoto(req, data));
       } else {
         res.status(404).send({
           message: `No se encontró el concierto con id=${id}.`
