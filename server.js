@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+app.set("trust proxy", 1); // Render usa un proxy: así req.protocol devuelve https
 
 // CORS abierto por defecto (la app JavaFX no lo necesita; el panel web sí).
 // En producción puedes limitarlo con la variable CORS_ORIGIN="https://tu-sitio.com,https://otro.com"

@@ -8,6 +8,7 @@ module.exports = app => {
   // Lectura pública; escritura solo administradores
   router.post("/imagen", ...admin, express.raw({ type: "image/*", limit: "6mb" }), artistas.subirImagen);
   router.post("/create", ...admin, artistas.create);
+  router.get("/imagen/:archivo", artistas.verImagen);
   router.get("/", artistas.findAll);
   router.get("/:id", artistas.findOne);
   router.put("/update/:id", ...admin, artistas.update);
