@@ -20,6 +20,11 @@ module.exports = (sequelize, Sequelize) => {
     total_venta: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false
+    },
+    // "tarjeta" | "transferencia" (pago simulado desde la app de clientes)
+    metodo_pago: {
+      type: Sequelize.STRING(30),
+      allowNull: true
     }
   }, {
     tableName: 'ventas',

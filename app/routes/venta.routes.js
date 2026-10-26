@@ -3,7 +3,7 @@ module.exports = app => {
   const { verificarToken, soloRoles } = require("../middleware/auth");
   var router = require("express").Router();
 
-  router.post("/create", verificarToken, soloRoles("vendedor"), ventas.create);
+  router.post("/create", verificarToken, soloRoles("vendedor", "cliente"), ventas.create);
   router.get("/", verificarToken, soloRoles("administrador", "vendedor"), ventas.findAll);
   router.get("/:id", verificarToken, soloRoles("administrador", "vendedor"), ventas.findOne);
 

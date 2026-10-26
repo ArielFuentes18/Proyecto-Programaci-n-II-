@@ -6,6 +6,7 @@ module.exports = app => {
 
   router.post("/login", usuarios.login);
   router.post("/solicitar-admin", usuarios.solicitarAdmin);
+  router.post("/registro", usuarios.registrarCliente);
 
   router.post("/create", ...admin, usuarios.create);
   router.get("/", ...admin, usuarios.findAll);

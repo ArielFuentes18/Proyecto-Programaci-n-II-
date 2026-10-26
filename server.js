@@ -11,10 +11,30 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
-db.sequelize.sync()
-  // Agrega la columna de la foto del cantante si todavía no existe (idempotente)
-  .then(() => db.sequelize.query("ALTER TABLE artistas ADD COLUMN IF NOT EXISTS imagen_url TEXT"))
-  .catch(err => console.error("Error al sincronizar la base de datos:", err.message));
+
+// Prepara la base de datos UNA vez al arrancar. Las peticiones esperan a que termine (db.listo),
+// así nunca consultan una columna que todavía no existe (causa típica de listas vacías / error 500).
+// Si una columna opcional no se puede crear, el modelo deja de usarla y el resto sigue funcionando.
+const COLUMNAS_OPCIONALES = [
+  { tabla: "artistas", modelo: db.artistas, columna: "imagen_url", tipo: "TEXT" },
+  { tabla: "ventas", modelo: db.ventas, columna: "metodo_pago", tipo: "VARCHAR(30)" }
+];
+db.listo = (async () => {
+  try {
+    await db.sequelize.sync();
+  } catch (err) {
+    console.error("Error al sincronizar la base de datos:", err.message);
+  }
+  for (const c of COLUMNAS_OPCIONALES) {
+    try {
+      await db.sequelize.query(`ALTER TABLE ${c.tabla} ADD COLUMN IF NOT EXISTS ${c.columna} ${c.tipo}`);
+    } catch (err) {
+      console.error(`No se pudo crear ${c.tabla}.${c.columna}; se ignora esa columna:`, err.message);
+      c.modelo.removeAttribute(c.columna);
+    }
+  }
+})();
+app.use((req, res, next) => { db.listo.then(() => next(), () => next()); });
 
 app.get("/", (req, res) => {
   res.json({ message: "UMG Web Application" });

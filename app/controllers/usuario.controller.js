@@ -80,6 +80,41 @@ exports.solicitarAdmin = async (req, res) => {
   }
 };
 
+// El rol "cliente" se crea la primera vez que alguien se registra (no hace falta tocar la base a mano).
+const rolCliente = async () => {
+  let r = await Rol.findOne({
+    where: db.Sequelize.where(db.Sequelize.fn("lower", db.Sequelize.col("nombre")), "cliente")
+  });
+  if (!r) r = await Rol.create({ nombre: "cliente" });
+  return r;
+};
+
+// POST /api/usuarios/registro  (público) -> crea un cliente ACTIVO
+exports.registrarCliente = async (req, res) => {
+  const { nombre, correo, password } = req.body;
+  if (!nombre || !correo || !password) return res.status(400).send({ message: "Nombre, correo y contraseña son obligatorios." });
+  if (String(nombre).trim().length < 3) return res.status(400).send({ message: "Escribe tu nombre completo." });
+  if (!EMAIL.test(correo)) return res.status(400).send({ message: "Escribe un correo válido." });
+  if (String(password).length < 6 || String(password).length > 30) {
+    return res.status(400).send({ message: "La contraseña debe tener entre 6 y 30 caracteres." });
+  }
+  try {
+    const rol = await rolCliente();
+    await Usuario.create({
+      nombre: String(nombre).trim(),
+      correo: String(correo).trim(),
+      password: String(password),
+      id_rol: rol.id_rol,
+      status: 1,
+      fecha: new Date()
+    });
+    res.status(201).send({ message: "Cuenta creada. Ya puedes iniciar sesión." });
+  } catch (err) {
+    if (errorDuplicado(err)) return res.status(409).send({ message: "Ya existe una cuenta con ese correo." });
+    res.status(500).send({ message: err.message || "Error al crear la cuenta." });
+  }
+};
+
 // POST /api/usuarios/create  (solo administradores, con token)
 exports.create = async (req, res) => {
   try {

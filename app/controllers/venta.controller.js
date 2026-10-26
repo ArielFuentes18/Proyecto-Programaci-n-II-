@@ -16,17 +16,23 @@ class ErrorNegocio extends Error {
 exports.create = async (req, res) => {
   const { detalles } = req.body;
   const id_usuario = req.user ? req.user.id : req.body.id_usuario;
+  const METODOS = ["tarjeta", "transferencia"];
+  const metodo_pago = METODOS.includes(String(req.body.metodo_pago || "").toLowerCase())
+    ? String(req.body.metodo_pago).toLowerCase() : null;
+  const MAX_BOLETOS_CLIENTE = 8;
 
   if (Array.isArray(detalles) && detalles.length > 0) {
     const t = await db.sequelize.transaction();
     try {
       let total = 0;
+      let boletos = 0;
       const filas = [];
       for (const d of detalles) {
         const cantidad = Number(d.cantidad);
         if (!d.id_inventario || !Number.isInteger(cantidad) || cantidad <= 0) {
           throw new ErrorNegocio(400, "Cada detalle requiere id_inventario y una cantidad entera mayor a 0.");
         }
+        boletos += cantidad;
         const inv = await db.inventario_boletos.findByPk(d.id_inventario, { transaction: t, lock: t.LOCK.UPDATE });
         if (!inv) throw new ErrorNegocio(404, `No existe el inventario con ID ${d.id_inventario}.`);
         if (inv.cantidad_disponible < cantidad) {
@@ -39,8 +45,11 @@ exports.create = async (req, res) => {
         filas.push({ id_inventario: inv.id_inventario, cantidad, precio_unitario: inv.precio, subtotal });
       }
       total = Math.round(total * 100) / 100;
+      if (req.user && req.user.rol === "cliente" && boletos > MAX_BOLETOS_CLIENTE) {
+        throw new ErrorNegocio(400, `Solo puedes comprar hasta ${MAX_BOLETOS_CLIENTE} boletos por orden.`);
+      }
 
-      const nueva = await Venta.create({ id_usuario, fecha_venta: new Date(), total_venta: total }, { transaction: t });
+      const nueva = await Venta.create({ id_usuario, fecha_venta: new Date(), total_venta: total, metodo_pago }, { transaction: t });
       await db.detalle_ventas.bulkCreate(filas.map(f => ({ ...f, id_venta: nueva.id_venta })), { transaction: t });
       await t.commit();
 
