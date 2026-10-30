@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane styleClass="fondo-app, cli-root" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistematickets.Controller.PagoClienteController">
+    <BorderPane>
+        <top>
+            <HBox fx:id="encabezado" />
+        </top>
+        <center>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="cli-scroll">
+                <content>
+                    <VBox spacing="22" styleClass="cli-page">
+                        <padding><Insets bottom="40" left="44" right="44" top="22" /></padding>
+
+                        <Button onAction="#onVolver" styleClass="link-btn, back-btn" text="← Volver a los boletos" />
+                        <VBox spacing="4">
+                            <Label styleClass="cli-title" text="Método de pago" />
+                        </VBox>
+
+                        <HBox alignment="TOP_LEFT" spacing="24">
+                            <VBox spacing="18" styleClass="cli-panel" HBox.hgrow="ALWAYS">
+
+                                <VBox fx:id="panelCliente" managed="false" spacing="12" visible="false">
+                                    <Label fx:id="lblTituloCliente" styleClass="cli-zona-nombre" text="Datos del cliente (opcional)" />
+                                    <HBox spacing="14">
+                                        <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                            <Label styleClass="field-label" text="Nombre" />
+                                            <TextField fx:id="tfClienteNombre" promptText="Consumidor final" styleClass="login-field" />
+                                        </VBox>
+                                        <VBox minWidth="140" prefWidth="170" spacing="6">
+                                            <Label styleClass="field-label" text="NIT" />
+                                            <TextField fx:id="tfClienteNit" promptText="CF" styleClass="login-field" />
+                                        </VBox>
+                                    </HBox>
+                                    <VBox fx:id="boxCorreo" managed="false" spacing="6" visible="false">
+                                        <Label styleClass="field-label" text="Correo del comprador (opcional: recibirá la factura y los QR de sus tickets)" />
+                                        <TextField fx:id="tfClienteCorreo" promptText="comprador@gmail.com" styleClass="login-field" />
+                                        <Label fx:id="errCorreo" managed="false" styleClass="err-label" visible="false" wrapText="true" />
+                                    </VBox>
+                                    <Separator />
+                                </VBox>
+
+                                <VBox spacing="6">
+                                    <Label styleClass="field-label" text="Moneda de pago" />
+                                    <ComboBox fx:id="cbMoneda" maxWidth="Infinity" styleClass="login-field" />
+                                    <Label fx:id="lblTasa" styleClass="cli-meta" wrapText="true" />
+                                </VBox>
+
+                                <HBox spacing="10">
+                                    <ToggleButton fx:id="tgEfectivo" managed="false" maxWidth="Infinity" styleClass="cli-toggle" text="Efectivo" visible="false" HBox.hgrow="ALWAYS" />
+                                    <ToggleButton fx:id="tgTarjeta" maxWidth="Infinity" styleClass="cli-toggle" text="Tarjeta de crédito / débito" HBox.hgrow="ALWAYS" />
+                                    <ToggleButton fx:id="tgTransferencia" maxWidth="Infinity" styleClass="cli-toggle" text="Transferencia bancaria" HBox.hgrow="ALWAYS" />
+                                </HBox>
+
+                                <!-- efectivo -->
+                                <VBox fx:id="panelEfectivo" managed="false" spacing="14" visible="false">
+                                    <VBox spacing="4" styleClass="cli-nota-caja">
+                                        <Label styleClass="cli-zona-disp" text="Total a cobrar" />
+                                        <Label fx:id="lblTotalCobrar" styleClass="cli-total" />
+                                    </VBox>
+                                    <VBox spacing="6">
+                                        <Label fx:id="lblRecibidoMoneda" styleClass="field-label" text="Monto recibido (Q)" />
+                                        <HBox spacing="10">
+                                            <TextField fx:id="tfRecibido" promptText="0.00" styleClass="login-field" HBox.hgrow="ALWAYS" />
+                                            <Button onAction="#onExacto" styleClass="tbl-btn" text="Monto exacto" />
+                                        </HBox>
+                                        <Label fx:id="errRecibido" managed="false" styleClass="err-label" visible="false" wrapText="true" />
+                                    </VBox>
+                                    <HBox alignment="CENTER_LEFT" styleClass="cli-nota-caja">
+                                        <Label styleClass="cli-subtitle" text="Cambio a entregar" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblCambio" styleClass="cli-total" />
+                                    </HBox>
+                                </VBox>
+
+                                <!-- tarjeta -->
+                                <VBox fx:id="panelTarjeta" spacing="14">
+                                    <VBox spacing="6">
+                                        <Label styleClass="field-label" text="Nombre del titular" />
+                                        <TextField fx:id="tfTitular" styleClass="login-field" />
+                                        <Label fx:id="errTitular" managed="false" styleClass="err-label" visible="false" wrapText="true" />
+                                    </VBox>
+                                    <VBox spacing="6">
+                                        <Label styleClass="field-label" text="Número de tarjeta" />
+                                        <TextField fx:id="tfNumero" promptText="0000 0000 0000 0000" styleClass="login-field" />
+                                        <Label fx:id="errNumero" managed="false" styleClass="err-label" visible="false" wrapText="true" />
+                                    </VBox>
+                                    <HBox spacing="14">
+                                        <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                            <Label styleClass="field-label" text="Vencimiento" />
+                                            <TextField fx:id="tfVence" promptText="MM/AA" styleClass="login-field" />
+                                            <Label fx:id="errVence" managed="false" styleClass="err-label" visible="false" wrapText="true" />
+                                        </VBox>
+                                        <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                            <Label styleClass="field-label" text="CVV" />
+                                            <PasswordField fx:id="pfCvv" promptText="•••" styleClass="login-field" />
+                                            <Label fx:id="errCvv" managed="false" styleClass="err-label" visible="false" wrapText="true" />
+                                        </VBox>
+                                    </HBox>
+                                </VBox>
+
+                                <!-- transferencia -->
+                                <VBox fx:id="panelTransferencia" managed="false" spacing="14" visible="false">
+                                    <VBox spacing="6" styleClass="cli-nota-caja">
+                                        <Label styleClass="cli-zona-nombre" text="Datos para la transferencia" />
+                                        <Label styleClass="cli-linea" text="Banco: Banco Simulado, S.A." />
+                                        <Label styleClass="cli-linea" text="Cuenta monetaria: 123-456789-0" />
+                                        <Label styleClass="cli-linea" text="A nombre de: Tickets Conciertos, S.A." />
+                                        <HBox alignment="CENTER_LEFT" spacing="8">
+                                            <Label styleClass="cli-linea" text="Referencia:" />
+                                            <Label fx:id="lblReferencia" styleClass="cli-linea-monto" />
+                                        </HBox>
+                                    </VBox>
+                                    <VBox spacing="6">
+                                        <Label styleClass="field-label" text="Banco desde el que transferiste" />
+                                        <ComboBox fx:id="cbBanco" maxWidth="Infinity" promptText="Selecciona un banco" styleClass="login-field" />
+                                        <Label fx:id="errBanco" managed="false" styleClass="err-label" visible="false" wrapText="true" />
+                                    </VBox>
+                                    <VBox spacing="6">
+                                        <Label styleClass="field-label" text="Número de boleta o autorización" />
+                                          <TextField fx:id="tfBoleta" styleClass="login-field" />                                      
+                                          <Label fx:id="errBoleta" managed="false" styleClass="err-label" visible="false" wrapText="true" />
+                                    </VBox>
+                                </VBox>
+
+                                <Label fx:id="lblMensaje" managed="false" styleClass="msg-error" visible="false" wrapText="true" />
+                                <Button fx:id="btnPagar" maxWidth="Infinity" onAction="#onPagar" styleClass="primary-btn" text="Realizar pago" />
+                            </VBox>
+
+                            <!-- ===== resumen ===== -->
+                            <VBox maxWidth="380" minWidth="320" prefWidth="360" spacing="12" styleClass="cli-panel">
+                                <Label styleClass="cli-section" text="Resumen de tu orden" />
+                                <Label fx:id="lblArtista" styleClass="cli-zona-nombre" wrapText="true" />
+                                <Label fx:id="lblEvento" styleClass="cli-meta" wrapText="true" />
+                                <Separator />
+                                <VBox fx:id="lineasResumen" spacing="6" />
+                                <Separator />
+                                <HBox alignment="CENTER_LEFT"><Label styleClass="cli-meta" text="Subtotal (sin IVA)" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblBase" styleClass="cli-linea-monto" /></HBox>
+                                <HBox alignment="CENTER_LEFT"><Label styleClass="cli-meta" text="IVA 12 % (incluido)" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblIva" styleClass="cli-linea-monto" /></HBox>
+                                <HBox alignment="CENTER_LEFT"><Label styleClass="cli-zona-nombre" text="Total a pagar (Q)" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblTotal" styleClass="cli-total" /></HBox>
+                                <HBox fx:id="filaMoneda" alignment="CENTER_LEFT" managed="false" visible="false"><Label fx:id="lblNombreMoneda" styleClass="cli-zona-nombre" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblTotalMoneda" styleClass="cli-total" /></HBox>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+
+    <StackPane fx:id="overlay" styleClass="cli-overlay" visible="false">
+        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="16">
+            <ProgressIndicator prefHeight="54" prefWidth="54" />
+            <Label styleClass="cli-section" text="Procesando tu pago…" />
+            <Label styleClass="cli-subtitle" text="No cierres la aplicación." />
+        </VBox>
+    </StackPane>
+</StackPane>

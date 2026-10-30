@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane fx:id="root" minHeight="620" minWidth="860" prefHeight="720" prefWidth="1100" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistematickets.Controller.SeleccionUsuarioController">
+
+<MediaView fx:id="mediaView" />
+
+<ImageView fx:id="fondo" fitHeight="${root.height}" fitWidth="${root.width}" mouseTransparent="true" preserveRatio="false">
+    <image>
+        <Image url="@../../sinfoto/fondocarreteraestadio.jpeg" />
+    </image>
+</ImageView>
+
+    <VBox fx:id="content" alignment="CENTER" maxWidth="980" prefHeight="697.0" prefWidth="980.0" spacing="14" styleClass="content">
+      <ImageView fitHeight="252.0" fitWidth="477.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../sinfoto/logotikitickets.png" />
+         </image>
+      </ImageView>
+        <Label styleClass="title" text="Bienvenido" />
+        <Region styleClass="accent-line" />
+        <Label styleClass="subtitle" text="Selecciona tipo de usuario" />
+
+        <HBox alignment="CENTER" spacing="30">
+            <padding><Insets bottom="14" top="26" /></padding>
+                <Button fx:id="btnVendedor" contentDisplay="GRAPHIC_ONLY" minWidth="200" onAction="#onVendedor" prefHeight="230" prefWidth="250" styleClass="role-card">
+                    <graphic>
+                        <VBox alignment="CENTER" prefWidth="210" spacing="14">
+                            <StackPane maxHeight="76" maxWidth="76" minHeight="76" minWidth="76" prefHeight="76" prefWidth="76" styleClass="icon-bubble">
+                                <SVGPath content="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" fill="white" scaleX="2.0" scaleY="2.0" />
+                            </StackPane>
+                            <Label styleClass="role-title" text="Vendedor" />
+                            <Label alignment="CENTER" prefWidth="200" styleClass="role-desc" text="Registra ventas y consulta el inventario de boletos." wrapText="true" />
+                        </VBox>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnAdmin" contentDisplay="GRAPHIC_ONLY" minWidth="200" onAction="#onAdmin" prefHeight="230" prefWidth="250" styleClass="role-card">
+                    <graphic>
+                        <VBox alignment="CENTER" prefWidth="210" spacing="14">
+                            <StackPane maxHeight="76" maxWidth="76" minHeight="76" minWidth="76" prefHeight="76" prefWidth="76" styleClass="icon-bubble">
+                                <SVGPath content="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" fill="white" scaleX="2.0" scaleY="2.0" />
+                            </StackPane>
+                            <Label styleClass="role-title" text="Admin" />
+                            <Label alignment="CENTER" prefWidth="200" styleClass="role-desc" text="Gestiona conciertos, usuarios y reportes del sistema." wrapText="true" />
+                        </VBox>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnCliente" contentDisplay="GRAPHIC_ONLY" minWidth="200" onAction="#onCliente" prefHeight="230" prefWidth="250" styleClass="role-card">
+                    <graphic>
+                        <VBox alignment="CENTER" prefWidth="210" spacing="14">
+                            <StackPane maxHeight="76" maxWidth="76" minHeight="76" minWidth="76" prefHeight="76" prefWidth="76" styleClass="icon-bubble">
+                                <SVGPath content="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="white" scaleX="2.0" scaleY="2.0" />
+                            </StackPane>
+                            <Label styleClass="role-title" text="Cliente" />
+                            <Label alignment="CENTER" prefWidth="200" styleClass="role-desc" text="Explora conciertos y consulta tus compras." wrapText="true" />
+                        </VBox>
+                    </graphic>
+                </Button>
+        </HBox>
+
+        <Label fx:id="lblEstado" styleClass="estado" text=" " />
+        <Label styleClass="footer" text="© 2026 Sistema de Venta de Tickets" />
+    </VBox>
+</StackPane>
+

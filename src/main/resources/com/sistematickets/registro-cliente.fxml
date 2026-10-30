@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistematickets.Controller.RegistroClienteController" styleClass="rol-cliente, cli-root">
+    <VBox alignment="CENTER_LEFT" spacing="12" maxWidth="460" maxHeight="-Infinity" styleClass="login-wrap">
+        <Button text="← Volver al selector de rol" onAction="#onVolver" styleClass="link-btn, back-btn"/>
+        <VBox spacing="14" styleClass="login-card, modal-card">
+            <Label text="Crea tu cuenta" styleClass="login-title"/>
+            <Label text="Regístrate para comprar boletos en minutos." styleClass="login-sub" wrapText="true"/>
+
+            <VBox spacing="6">
+                <Label text="Nombre completo" styleClass="field-label"/>
+                <TextField fx:id="tfNombre" promptText="Tu nombre y apellido" styleClass="login-field"/>
+                <Label fx:id="errNombre" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+            <VBox spacing="6">
+                <Label text="Correo electrónico" styleClass="field-label"/>
+                <TextField fx:id="tfCorreo" promptText="tucorreo@ejemplo.com" styleClass="login-field"/>
+                <Label fx:id="errCorreo" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+            <VBox spacing="6">
+                <Label text="Contraseña (6 a 30 caracteres)" styleClass="field-label"/>
+                <PasswordField fx:id="pfPassword" promptText="••••••••" styleClass="login-field"/>
+                <Label fx:id="errPassword" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+            <VBox spacing="6">
+                <Label text="Confirmar contraseña" styleClass="field-label"/>
+                <PasswordField fx:id="pfConfirmar" promptText="••••••••" styleClass="login-field"/>
+                <Label fx:id="errConfirmar" styleClass="err-label" visible="false" managed="false" wrapText="true"/>
+            </VBox>
+
+            <Button fx:id="btnRegistrar" text="Crear cuenta" onAction="#onRegistrar" defaultButton="true"
+                    styleClass="primary-btn" maxWidth="Infinity"/>
+            <Label fx:id="lblMensaje" styleClass="msg-error" wrapText="true" visible="false" managed="false"/>
+        </VBox>
+    </VBox>
+</StackPane>

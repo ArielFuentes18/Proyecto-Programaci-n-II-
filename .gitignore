@@ -1,0 +1,4 @@
+/target/
+
+# credenciales de correo (no subir al repositorio)
+src/main/resources/conexion/correo.properties

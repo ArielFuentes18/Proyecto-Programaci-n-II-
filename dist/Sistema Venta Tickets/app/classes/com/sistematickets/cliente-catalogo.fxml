@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistematickets.Controller.CatalogoClienteController" styleClass="fondo-app, cli-root">
+    <top>
+        <HBox fx:id="encabezado"/>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="cli-scroll">
+            <content>
+                <VBox spacing="28" styleClass="cli-page">
+                    <padding><Insets top="30" right="44" bottom="48" left="44"/></padding>
+
+                    <VBox spacing="6">
+                        <Label text="Descubre tu próximo concierto" styleClass="cli-title"/>
+                        <Label text="Busca, filtra y compra tus boletos en tres pasos." styleClass="cli-subtitle"/>
+                    </VBox>
+
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <TextField fx:id="tfBuscar" promptText="Buscar artista, evento o recinto…" styleClass="login-field" HBox.hgrow="ALWAYS"/>
+                        <ComboBox fx:id="cbGenero" prefWidth="190" styleClass="login-field"/>
+                        <ComboBox fx:id="cbArtista" prefWidth="200" styleClass="login-field"/>
+                        <ComboBox fx:id="cbFecha" prefWidth="180" styleClass="login-field"/>
+                        <Button text="Limpiar" onAction="#onLimpiar" styleClass="tbl-btn"/>
+                    </HBox>
+
+                    <VBox fx:id="seccionRecomendados" spacing="14">
+                        <Label text="Recomendados para ti" styleClass="cli-section"/>
+                        <FlowPane fx:id="filaRecomendados" hgap="24" vgap="24"/>
+                    </VBox>
+
+                    <VBox spacing="14">
+                        <HBox spacing="12" alignment="BOTTOM_LEFT">
+                            <Label text="Todos los conciertos" styleClass="cli-section"/>
+                            <Label fx:id="lblConteo" styleClass="cli-subtitle"/>
+                        </HBox>
+                        <Label fx:id="lblEstado" styleClass="cli-nota" wrapText="true"/>
+                        <FlowPane fx:id="grid" hgap="24" vgap="24"/>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

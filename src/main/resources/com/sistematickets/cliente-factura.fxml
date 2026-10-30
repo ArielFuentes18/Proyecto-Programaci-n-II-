@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane styleClass="fondo-app, cli-root" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistematickets.Controller.FacturaClienteController">
+    <top>
+        <HBox fx:id="encabezado" />
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="cli-scroll">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="20" styleClass="cli-page">
+                    <padding><Insets bottom="44" left="44" right="44" top="26" /></padding>
+
+                    <VBox alignment="CENTER" spacing="4">
+                        <Label fx:id="lblTituloVista" styleClass="cli-title" text="¡Pago realizado con éxito!" />
+                        <Label fx:id="lblSubtituloVista" styleClass="cli-subtitle" text="Guarda tu factura: la necesitarás para ingresar al evento." />
+                    </VBox>
+
+                    <VBox fx:id="papel" maxWidth="720" prefWidth="720" styleClass="cli-papel">
+                        <HBox alignment="CENTER_LEFT" styleClass="cli-papel-cabecera">
+                            <VBox spacing="2">
+                                <Label styleClass="cli-papel-sup" text="FACTURA" />
+                                <Label fx:id="lblFactura" styleClass="cli-papel-num" />
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <VBox alignment="CENTER_RIGHT" spacing="6">
+                                <Label styleClass="cli-sello" text="PAGADO" />
+                                <Label fx:id="lblFecha" styleClass="cli-papel-sup" />
+                            </VBox>
+                        </HBox>
+
+                        <VBox spacing="20" styleClass="cli-papel-cuerpo">
+                            <HBox spacing="30">
+                                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="cli-papel-muted" text="CLIENTE" />
+                                    <Label fx:id="lblCliente" styleClass="cli-papel-titulo" />
+                                    <Label fx:id="lblCorreo" styleClass="cli-papel-texto" />
+                                    <Label fx:id="lblAtendidoTit" managed="false" styleClass="cli-papel-muted" text="ATENDIDO POR" visible="false" />
+                                    <Label fx:id="lblAtendido" managed="false" styleClass="cli-papel-texto" visible="false" />
+                                </VBox>
+                                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="cli-papel-muted" text="EVENTO" />
+                                    <Label fx:id="lblEvento" styleClass="cli-papel-titulo" wrapText="true" />
+                                    <Label fx:id="lblArtista" styleClass="cli-papel-texto" />
+                                    <Label fx:id="lblFechaEvento" styleClass="cli-papel-texto" wrapText="true" />
+                                    <Label fx:id="lblRecinto" styleClass="cli-papel-texto" />
+                                </VBox>
+                            </HBox>
+
+                            <GridPane fx:id="tablaLineas" styleClass="cli-papel-tabla" vgap="8" />
+
+                            <VBox alignment="CENTER_RIGHT" spacing="6" styleClass="cli-papel-totales">
+                                <HBox><Label styleClass="cli-papel-texto" text="Subtotal (sin IVA)" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblBase" styleClass="cli-papel-texto" /></HBox>
+                                <HBox><Label styleClass="cli-papel-texto" text="IVA 12 %" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblIva" styleClass="cli-papel-texto" /></HBox>
+                                <HBox><Label styleClass="cli-papel-titulo" text="TOTAL PAGADO" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblTotal" styleClass="cli-papel-total" /></HBox>
+                            </VBox>
+
+                            <HBox alignment="CENTER_LEFT" spacing="22" styleClass="cli-papel-pie">
+                                <Canvas fx:id="canvasQr" height="132" width="132" />
+                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="cli-papel-muted" text="MÉTODO DE PAGO" />
+                                    <Label fx:id="lblMetodo" styleClass="cli-papel-titulo" />
+                                    <Label fx:id="lblDetallePago" styleClass="cli-papel-texto" wrapText="true" />
+                                    <Label styleClass="cli-papel-muted" text="CÓDIGO DE ACCESO" />
+                                    <Label fx:id="lblCodigo" styleClass="cli-papel-titulo" />
+                                    <Label styleClass="cli-papel-muted" text="Presenta el QR de cada ticket en la entrada." />
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+
+                    <HBox alignment="CENTER" spacing="12">
+                        <Button onAction="#onDescargarPdf" styleClass="tbl-btn" text="Descargar PDF" />
+                        <Button onAction="#onImprimir" styleClass="tbl-btn" text="Imprimir" />
+                        <Button fx:id="btnSeguir" onAction="#onSeguir" styleClass="primary-btn" text="Seguir comprando" />
+                    </HBox>
+                    <Label fx:id="lblPdfEstado" managed="false" maxWidth="720" styleClass="cli-nota" visible="false" wrapText="true" />
+                    <Label fx:id="lblCorreoEstado" managed="false" maxWidth="720" styleClass="cli-nota" visible="false" wrapText="true" />
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

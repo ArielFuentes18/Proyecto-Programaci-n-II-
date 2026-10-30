@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.sistematickets.Controller.EstadisticasController"
+            fitToWidth="true" hbarPolicy="NEVER" styleClass="stats-scroll">
+    <VBox spacing="18">
+        <padding><Insets top="24" right="28" bottom="24" left="24"/></padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2">
+                <Label text="Estadísticas y reportes" styleClass="panel-title"/>
+                <Label fx:id="lblEstado" styleClass="muted" wrapText="true"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <ComboBox fx:id="cbPeriodo" styleClass="login-field" prefWidth="200"/>
+            <Button fx:id="btnActualizar" text="Actualizar" onAction="#onActualizar" styleClass="tbl-btn"/>
+            <Button fx:id="btnPdf" text="Exportar PDF" onAction="#onExportarPdf" styleClass="primary-btn"/>
+        </HBox>
+
+        <GridPane fx:id="kpis" hgap="14" vgap="14"/>
+
+        <VBox spacing="8" styleClass="card-blanca, insight-box">
+            <Label text="Hallazgos clave" styleClass="section-title"/>
+            <VBox fx:id="hallazgos" spacing="6"/>
+        </VBox>
+
+        <Label text="Gráficos" styleClass="section-title"/>
+        <FlowPane fx:id="graficos" hgap="16" vgap="16"/>
+
+        <Label text="Viabilidad de conciertos" styleClass="section-title"/>
+        <Label text="Puntaje = 60% ocupación + 40% ingresos relativos del período. Riesgo: evento en 30 días o menos con ocupación menor al 50%."
+               styleClass="muted" wrapText="true"/>
+        <StackPane styleClass="card-blanca">
+            <TableView fx:id="tabla" styleClass="tabla-blanca" prefHeight="400" minHeight="300"/>
+        </StackPane>
+    </VBox>
+</ScrollPane>

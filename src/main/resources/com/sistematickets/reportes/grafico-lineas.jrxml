@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="grafico_lineas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenNoDataType="AllSectionsNoDetail">
+	<subDataset name="Datos">
+		<field name="etiqueta" class="java.lang.String"/>
+		<field name="valor" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="TITULO" class="java.lang.String"/>
+	<parameter name="SUBTITULO" class="java.lang.String"/>
+	<parameter name="NOTA" class="java.lang.String"/>
+	<parameter name="PIE" class="java.lang.String"/>
+	<parameter name="DATOS" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<title>
+		<band height="70">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="40" forecolor="#FFFFFF" backcolor="#4C1D95"/>
+				<box leftPadding="16"/>
+				<textElement verticalAlignment="Middle"><font fontName="SansSerif" size="20" isBold="true" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/></textElement>
+				<textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="40" width="802" height="24" forecolor="#EDE9FE" backcolor="#6D28D9"/>
+				<box leftPadding="16"/>
+				<textElement verticalAlignment="Middle"><font fontName="SansSerif" size="11" isBold="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/></textElement>
+				<textFieldExpression><![CDATA[$P{SUBTITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="472">
+			<lineChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="0" y="6" width="802" height="380"/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="Datos">
+							<dataSourceExpression><![CDATA[$P{DATOS}]]></dataSourceExpression>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Ingresos (Q)"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{etiqueta}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{valor}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowLines="true" isShowShapes="true">
+					<plot backcolor="#FFFFFF" labelRotation="-45.0">
+						<seriesColor seriesOrder="0" color="#7C3AED"/>
+					</plot>
+				</linePlot>
+			</lineChart>
+			<textField isStretchWithOverflow="true">
+				<reportElement mode="Opaque" x="0" y="392" width="802" height="56" forecolor="#3B0764" backcolor="#F5F3FF"/>
+				<box leftPadding="14" rightPadding="14" topPadding="8"/>
+				<textElement verticalAlignment="Top"><font fontName="SansSerif" size="13" isBold="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/></textElement>
+				<textFieldExpression><![CDATA[$P{NOTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="454" width="802" height="14" forecolor="#6B7280"/>
+				<textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/></textElement>
+				<textFieldExpression><![CDATA[$P{PIE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

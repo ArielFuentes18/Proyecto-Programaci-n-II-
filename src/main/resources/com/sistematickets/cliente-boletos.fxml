@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistematickets.Controller.BoletosClienteController" styleClass="fondo-app, cli-root">
+    <top>
+        <HBox fx:id="encabezado"/>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="cli-scroll">
+            <content>
+                <VBox spacing="22" styleClass="cli-page">
+                    <padding><Insets top="22" right="44" bottom="40" left="44"/></padding>
+
+                    <Button fx:id="btnVolver" text="← Volver al catálogo" onAction="#onVolver" styleClass="link-btn, back-btn"/>
+
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <ImageView fx:id="imgEvento" fitWidth="112" fitHeight="112" preserveRatio="false"/>
+                        <VBox spacing="4">
+                            <Label fx:id="lblArtista" styleClass="cli-title" wrapText="true"/>
+                            <Label fx:id="lblEvento" styleClass="cli-subtitle" wrapText="true"/>
+                            <Label fx:id="lblFecha" styleClass="cli-meta"/>
+                            <Label fx:id="lblRecinto" styleClass="cli-meta"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox spacing="24" alignment="TOP_LEFT">
+                        <VBox spacing="10" styleClass="cli-panel" HBox.hgrow="ALWAYS">
+                            <Label text="Elige tu localidad" styleClass="cli-section"/>
+                            <Label text="Toca una zona del mapa o una de las opciones de la derecha." styleClass="cli-subtitle" wrapText="true"/>
+                            <StackPane fx:id="zonaMapa" minHeight="340" prefHeight="440" VBox.vgrow="ALWAYS"/>
+                        </VBox>
+
+                        <VBox spacing="14" minWidth="340" prefWidth="390" maxWidth="420">
+                            <Label text="Localidades" styleClass="cli-section"/>
+                            <VBox fx:id="listaTipos" spacing="10"/>
+
+                            <VBox spacing="10" styleClass="cli-panel">
+                                <Label text="Tu selección" styleClass="cli-zona-nombre"/>
+                                <Label fx:id="lblVacio" styleClass="cli-subtitle" wrapText="true"/>
+                                <VBox fx:id="lineasResumen" spacing="6"/>
+                                <Separator/>
+                                <HBox alignment="CENTER_LEFT" spacing="8">
+                                    <Label fx:id="lblBoletos" styleClass="cli-subtitle"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Label text="Total" styleClass="cli-subtitle"/>
+                                    <Label fx:id="lblSubtotal" styleClass="cli-total"/>
+                                </HBox>
+                                <Label fx:id="lblAviso" styleClass="cli-nota" wrapText="true"/>
+                                <Button fx:id="btnContinuar" text="Continuar con el pago" onAction="#onContinuar"
+                                        styleClass="primary-btn" maxWidth="Infinity" disable="true"/>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

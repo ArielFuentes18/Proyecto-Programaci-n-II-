@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" prefWidth="270.0" spacing="10.0" styleClass="tarjeta-concierto" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistematickets.Controller.TarjetaConciertoController">
+   <children>
+      <Label fx:id="lblFecha" styleClass="tarjeta-fecha" text="23 Octubre" />
+
+      <!-- La foto ES el botón: al hacer clic se abre el proceso de venta -->
+      <Button fx:id="btnFoto" mnemonicParsing="false" onAction="#abrirVenta" styleClass="boton-foto">
+         <graphic>
+            <ImageView fx:id="imgArtista" fitHeight="230.0" fitWidth="250.0" pickOnBounds="true" />
+         </graphic>
+      </Button>
+
+      <Label fx:id="lblNombre" styleClass="tarjeta-nombre" text="Nombre del artista" />
+      <Label fx:id="lblLugar" alignment="CENTER" maxWidth="250.0" styleClass="tarjeta-lugar" text="Lugar - Ciudad" textAlignment="CENTER" wrapText="true" />
+   </children>
+</VBox>

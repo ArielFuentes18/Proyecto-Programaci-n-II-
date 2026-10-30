@@ -1,0 +1,128 @@
+/* =====================================================================
+   menuvendedor.css  -  Menú del vendedor
+   Mismo look que seleccion-usuario.css: fondo morado oscuro (fallback + overlay),
+   tipografía Segoe UI y colores #ddd6fe / #c4b5fd / #f3e8ff.
+   ===================================================================== */
+
+/* Tipografía global y colores de texto reutilizables (también los usa estilos-compra.css) */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -txt: white;
+    -txt-suave: #ddd6fe;
+}
+
+/* Fondo: degradado "fallback" + capa "overlay" de la pantalla de inicio */
+.fondo-lila {
+    -rol-a: #7c3aed;      /* mismos colores que el rol vendedor del login */
+    -rol-b: #a78bfa;
+    -txt: white;
+    -txt-suave: #ddd6fe;
+    -fx-background-color:
+        linear-gradient(to bottom right, #2e1065, #6d28d9 60%, #8b5cf6),
+        linear-gradient(to bottom,
+            rgba(30, 10, 60, 0.55) 0%,
+            rgba(76, 29, 149, 0.78) 55%,
+            rgba(46, 16, 101, 0.92) 100%);
+}
+
+.content { -fx-padding: 24 40; }
+
+/* ---------- Barra superior ---------- */
+.barra-superior {
+    -fx-background-color: linear-gradient(to right, #2e1065, #6d28d9 60%, #3e07be);
+    -fx-border-color: rgba(192,132,252,0.55);
+    -fx-border-width: 0 0 2 0;
+    -fx-alignment: center-left;
+}
+.barra-superior .label {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+.barra-superior .toggle-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ddd6fe;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 10 0 10;
+    -fx-cursor: hand;
+}
+.barra-superior .toggle-button:hover {
+    -fx-text-fill: white;
+}
+.barra-superior .toggle-button:selected {
+    -fx-text-fill: white;
+    -fx-border-color: #c4b5fd;
+    -fx-border-width: 0 0 2 0;
+}
+
+/* Saludo */
+.saludo-caja { -fx-padding: 0 20 0 0; }
+.saludo-nombre {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.saludo-bienvenida {
+    -fx-text-fill: #ddd6fe;
+    -fx-font-size: 12px;
+}
+
+/* Botón con brillo (Salir) - mismo estilo que .primary-btn de los logins */
+.boton-brillo {
+    -fx-background-color: linear-gradient(to right, -rol-a, -rol-b);
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 30;
+    -fx-padding: 10 28 10 28;
+    -fx-cursor: hand;
+}
+.boton-brillo:hover {
+    -fx-background-color: linear-gradient(to right, -rol-b, -rol-a);
+}
+.boton-brillo:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* ---------- Zona de tarjetas ---------- */
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+.scroll-pane .scroll-bar { -fx-background-color: transparent; }
+.scroll-pane .scroll-bar .track { -fx-background-color: transparent; }
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: rgba(192,132,252,0.40);
+    -fx-background-radius: 6;
+}
+.scroll-pane .scroll-bar .increment-button,
+.scroll-pane .scroll-bar .decrement-button { -fx-padding: 0; -fx-background-color: transparent; }
+.scroll-pane .scroll-bar .increment-arrow,
+.scroll-pane .scroll-bar .decrement-arrow { -fx-padding: 0; }
+
+/* ---------- Tarjeta de concierto (fondo transparente) ---------- */
+.tarjeta-concierto { -fx-padding: 6; }
+
+.tarjeta-fecha   { -fx-text-fill: #e9d5ff; -fx-font-size: 18px; -fx-font-weight: bold; }
+.tarjeta-nombre  { -fx-text-fill: white;   -fx-font-size: 22px; -fx-font-weight: bold; }
+.tarjeta-lugar   { -fx-text-fill: #c4b5fd; -fx-font-size: 16px; }
+
+/* La foto como botón: sin el aspecto gris por defecto */
+.boton-foto {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-cursor: hand;
+}
+.boton-foto:hover {
+    -fx-opacity: 0.9;
+}
+.boton-foto:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
